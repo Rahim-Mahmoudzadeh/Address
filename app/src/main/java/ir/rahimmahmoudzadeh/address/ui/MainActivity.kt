@@ -1,7 +1,8 @@
-package ir.rahimmahmoudzadeh.address
+package ir.rahimmahmoudzadeh.address.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ir.rahimmahmoudzadeh.address.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

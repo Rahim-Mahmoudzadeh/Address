@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">Address</string>
+    <string name="sing_in">ثبت نام</string>
+    <string name="submit_information">لطفا اطلاعات ورود خود را وارد نمایید</string>
+    <string name="name">نام</string>
+    <string name="last_name">نام خانوادگی:</string>
+    <string name="phone_number">شماره تلفن</string>
+    <string name="landline_phone">تلفن ثابت</string>
+    <string name="address">آدرس دقیق</string>
+    <string name="gender">جنسیت</string>
+    <string name="man">مرد</string>
+    <string name="woman">زن</string>
+    <string name="welcome">خوش آمدید</string>
+    <string name="username">نام کاربری</string>
+    <string name="password">پسورد</string>
+    <string name="login">ورود</string>
+    <string name="list_address">لیست آدرس ها</string>
+    <string name="address_location">آدرس:</string>
+    <string name="mobile">موبایل:</string>
+    <string name="add_location">اضافه کردن ادرس</string>
+    <string name="next_step">مرحله بعد</string>
+    <string name="unknown_error">خطای نامشخص</string>
+    <string name="save_information">تایید موقعیت</string>
+    <string name="error_textInput">فیلد خالی را پر کنید!</string>
+    <string name="error_connection">لطفا اینترنت خود را روشن کنید!</string>
+    <string name="ok">باشه</string>
 </resources>
