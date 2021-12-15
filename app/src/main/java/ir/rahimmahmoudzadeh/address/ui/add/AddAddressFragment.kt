@@ -9,10 +9,12 @@ import androidx.navigation.fragment.findNavController
 import ir.rahimmahmoudzadeh.address.R
 import ir.rahimmahmoudzadeh.address.databinding.AddLocationBinding
 import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddAddressFragment : Fragment() {
     private var _binding: AddLocationBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: AddAddressViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,15 +28,15 @@ class AddAddressFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnAddLocationGoToMap.setOnClickListener {
-            if (!checkEmpty())
-            {
+            if (!checkEmpty()) {
+                saveAddress()
                 findNavController().navigate(R.id.action_addLocation_to_mapFragment)
             }
         }
 
     }
 
-    private fun checkEmpty():Boolean {
+    private fun checkEmpty(): Boolean {
         var errorTextField = 0
         if (binding.tietAddName.text.isNullOrEmpty()) {
             errorTextField = errorTextField.plus(1)
@@ -72,6 +74,29 @@ class AddAddressFragment : Fragment() {
             binding.tilLoginAddress.error = ""
         }
         return errorTextField > 0
+    }
+
+    private fun saveAddress() {
+        viewModel.setAddressInformation(
+            binding.tietAddAddress.text.toString(),
+            binding.tietAddPhoneNumber.text.toString(),
+            binding.tietAddLandlinePhone.text.toString(),
+            binding.tietAddName.text.toString(),
+            getGender(),
+            binding.tietAddLastName.text.toString()
+        )
+    }
+
+    private fun getGender(): String {
+        var gender = resources.getString(R.string.man)
+        binding.rgAddGender.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                1 -> gender = resources.getString(R.string.man)
+
+                2 -> gender = resources.getString(R.string.woman)
+            }
+        }
+        return gender
     }
 
     override fun onDestroy() {
