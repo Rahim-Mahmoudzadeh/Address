@@ -115,6 +115,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/tiet_add_phoneNumber"
                             android:inputType="number"
+                            android:maxLength="11"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -133,6 +134,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/tiet_add_landlinePhone"
                             android:layout_width="match_parent"
+                            android:maxLength="11"
                             android:inputType="number"
                             android:layout_height="wrap_content" />
 
@@ -201,6 +203,7 @@
                             <RadioButton
                                 android:layout_marginRight="8dp"
                                 android:text="@string/man"
+                                android:checked="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                             <RadioButton

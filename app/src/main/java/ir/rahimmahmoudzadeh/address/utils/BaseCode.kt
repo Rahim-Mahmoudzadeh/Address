@@ -18,10 +18,15 @@ fun convertErrorBody(throwable: HttpException): String {
             } else if (throwable.code() == 403) {
                 errorMessage = errorJsonObject.getJSONArray("phone").get(0).toString()
             }
+            else if(throwable.code()==500)
+            {
+                errorMessage=errorJsonObject.getString("detail")
+            }
 
             return errorMessage.toString()
 
         } catch (exception: Exception) {
+
         }
     return "خطای نا مشخص"
 }

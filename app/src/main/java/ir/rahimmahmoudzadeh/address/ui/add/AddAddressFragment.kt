@@ -8,13 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ir.rahimmahmoudzadeh.address.R
 import ir.rahimmahmoudzadeh.address.databinding.AddLocationBinding
+import ir.rahimmahmoudzadeh.address.ui.MainActivity
 import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddAddressFragment : Fragment() {
     private var _binding: AddLocationBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: AddAddressViewModel by viewModel()
+    private val viewModel by sharedViewModel<AddAddressViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,6 +78,7 @@ class AddAddressFragment : Fragment() {
         return errorTextField > 0
     }
 
+
     private fun saveAddress() {
         viewModel.setAddressInformation(
             binding.tietAddAddress.text.toString(),
@@ -88,7 +91,7 @@ class AddAddressFragment : Fragment() {
     }
 
     private fun getGender(): String {
-        var gender = resources.getString(R.string.man)
+        var gender="Male"
         binding.rgAddGender.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 1 -> gender = resources.getString(R.string.man)

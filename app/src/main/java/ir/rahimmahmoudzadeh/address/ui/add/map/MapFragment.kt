@@ -1,12 +1,11 @@
 package ir.rahimmahmoudzadeh.address.ui.add.map
 
-import android.R
-import android.graphics.Color.red
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.mapbox.mapboxsdk.annotations.IconFactory
 import com.mapbox.mapboxsdk.annotations.Marker
 import com.mapbox.mapboxsdk.annotations.MarkerOptions
@@ -15,9 +14,13 @@ import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
 import ir.map.sdk_map.MapirStyle
 import ir.map.sdk_map.maps.MapView
+import ir.rahimmahmoudzadeh.address.R
 import ir.rahimmahmoudzadeh.address.databinding.MapFragmentBinding
+import ir.rahimmahmoudzadeh.address.ui.MainActivity
 import ir.rahimmahmoudzadeh.address.ui.add.AddAddressViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import ir.rahimmahmoudzadeh.address.utils.Resource
+import ir.rahimmahmoudzadeh.address.utils.showSnackBar
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MapFragment : Fragment(), MapboxMap.OnMapLongClickListener {
     private var _binding: MapFragmentBinding? = null
@@ -25,9 +28,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapLongClickListener {
     private lateinit var mapView: MapView
     private var map: MapboxMap? = null
     private var mapStyle: Style? = null
-    private var samplePoint: LatLng? = null
     private var myMarker: Marker? = null
-    private val viewMode: AddAddressViewModel by viewModel()
+    private val viewModel by sharedViewModel<AddAddressViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +44,26 @@ class MapFragment : Fragment(), MapboxMap.OnMapLongClickListener {
         super.onViewCreated(view, savedInstanceState)
         setMap()
         mapView.onCreate(savedInstanceState)
+
+
+        binding.btnMapSaveLocation.setOnClickListener {
+            viewModel.checkSaveAddress().observe(viewLifecycleOwner) {
+                it?.let { resource ->
+                    when (resource) {
+                        is Resource.Loading -> {
+                            binding.progressBarMap.visibility = View.VISIBLE
+                        }
+                        is Resource.Success -> {
+                                findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
+                        }
+                        is Resource.Error -> {
+                            showSnackBar(binding.root, resource.message.toString())
+                            binding.progressBarMap.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun setMap() {
@@ -61,15 +83,19 @@ class MapFragment : Fragment(), MapboxMap.OnMapLongClickListener {
     }
 
     override fun onMapLongClick(point: LatLng): Boolean {
-        samplePoint = point
         addMarker(point)
-        viewMode.setAddressLocation(point.latitude, point.longitude)
+        viewModel.setAddressLocation(point.latitude, point.longitude)
         return true
     }
+
     private fun addMarker(position: LatLng) {
         val iconFactory = activity?.let { IconFactory.getInstance(it) }
-        val icon = iconFactory?.fromResource(R.drawable.ic_menu_mylocation)
-        myMarker = map!!.addMarker(
+        val icon = iconFactory?.fromResource(R.drawable.red_marker)
+        if(map!!.markers.isNotEmpty())
+        {
+            map!!.deselectMarkers()
+        }
+        map!!.addMarker(
             MarkerOptions()
                 .position(position)
                 .icon(icon)

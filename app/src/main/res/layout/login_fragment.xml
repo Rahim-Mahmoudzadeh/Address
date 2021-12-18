@@ -36,6 +36,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_login_username"
             android:layout_width="match_parent"
+            android:maxLength="11"
             android:inputType="number"
             android:layout_height="wrap_content" />
 
