@@ -54,7 +54,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapLongClickListener {
                             binding.progressBarMap.visibility = View.VISIBLE
                         }
                         is Resource.Success -> {
-                                findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
+                            findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
                         }
                         is Resource.Error -> {
                             showSnackBar(binding.root, resource.message.toString())
@@ -91,9 +91,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapLongClickListener {
     private fun addMarker(position: LatLng) {
         val iconFactory = activity?.let { IconFactory.getInstance(it) }
         val icon = iconFactory?.fromResource(R.drawable.red_marker)
-        if(map!!.markers.isNotEmpty())
-        {
-            map!!.deselectMarkers()
+        if (map!!.markers.isNotEmpty()) {
+            map!!.clear()
         }
         map!!.addMarker(
             MarkerOptions()

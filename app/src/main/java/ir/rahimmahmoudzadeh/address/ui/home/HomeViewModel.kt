@@ -10,15 +10,16 @@ import ir.rahimmahmoudzadeh.address.utils.convertErrorBody
 import okio.IOException
 import retrofit2.HttpException
 
-class HomeViewModel(val getAddress: GetAddress):ViewModel() {
-  fun getAddressLiveData():LiveData<Resource<List<LocationInformation>>> = liveData {
-      try {
-          emit(Resource.Loading())
-          val getAddress=getAddress.getAddress()
-          emit(Resource.Success(getAddress))
-      }catch (e: HttpException)
-      {
-          emit(Resource.Error(convertErrorBody(e)))
-      }
-  }
+class HomeViewModel(val getAddress: GetAddress) : ViewModel() {
+    fun getAddressLiveData(): LiveData<Resource<List<LocationInformation>>> = liveData {
+        try {
+            emit(Resource.Loading())
+            val getAddress = getAddress.getAddress()
+            emit(Resource.Success(getAddress))
+        } catch (e: HttpException) {
+            emit(Resource.Error(convertErrorBody(e)))
+        } catch (e: IOException) {
+            emit(Resource.Error("Not Internet"))
+        }
+    }
 }

@@ -24,6 +24,8 @@ class LoginViewModel(val checkUserInterface: CheckUser) : ViewModel() {
             emit(Resource.Success(getUser))
         } catch (e: HttpException) {
             emit(Resource.Error(convertErrorBody(e)))
+        } catch (e: IOException) {
+            emit(Resource.Error("Not Internet"))
         }
 
     }

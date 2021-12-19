@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ir.rahimmahmoudzadeh.address.R
@@ -91,14 +92,15 @@ class AddAddressFragment : Fragment() {
     }
 
     private fun getGender(): String {
-        var gender="Male"
-        binding.rgAddGender.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                1 -> gender = resources.getString(R.string.man)
-
-                2 -> gender = resources.getString(R.string.woman)
-            }
+        var gender = resources.getString(R.string.man)
+        if (binding.man.isChecked)
+        {
+          gender=resources.getString(R.string.man)
         }
+        else{
+            gender=resources.getString(R.string.woman)
+        }
+
         return gender
     }
 

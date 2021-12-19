@@ -201,12 +201,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                             <RadioButton
+                                android:id="@+id/man"
                                 android:layout_marginRight="8dp"
                                 android:text="@string/man"
-                                android:checked="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                             <RadioButton
+                                android:id="@+id/woman"
                                 android:text="@string/woman"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>

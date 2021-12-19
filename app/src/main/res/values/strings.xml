@@ -24,4 +24,5 @@
     <string name="error_textInput">فیلد خالی را پر کنید!</string>
     <string name="error_connection">لطفا اینترنت خود را روشن کنید!</string>
     <string name="ok">باشه</string>
+    <string name="try_again">تلاش مجدد</string>
 </resources>

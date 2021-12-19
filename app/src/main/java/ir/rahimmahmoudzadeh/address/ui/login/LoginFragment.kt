@@ -10,11 +10,12 @@ import androidx.navigation.fragment.findNavController
 import ir.rahimmahmoudzadeh.address.R
 import ir.rahimmahmoudzadeh.address.data.sharedPreferences.UserSave
 import ir.rahimmahmoudzadeh.address.databinding.LoginFragmentBinding
+import ir.rahimmahmoudzadeh.address.utils.AddressFragment
 import ir.rahimmahmoudzadeh.address.utils.Resource
 import ir.rahimmahmoudzadeh.address.utils.showSnackBar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginFragment : Fragment() {
+class LoginFragment : AddressFragment() {
     private var _binding: LoginFragmentBinding? = null
     private val binding get() = _binding!!
     val viewModel: LoginViewModel by viewModel()
@@ -53,15 +54,18 @@ class LoginFragment : Fragment() {
             it?.let { resources ->
                 when (resources) {
                     is Resource.Loading -> {
-                        binding.progressBarLogin.visibility = View.VISIBLE
+                        showProgressBar(true)
+                        binding.button.visibility=View.GONE
                     }
                     is Resource.Success -> {
-                        binding.progressBarLogin.visibility = View.GONE
+                        showProgressBar(false)
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                        binding.button.visibility=View.VISIBLE
                     }
                     is Resource.Error -> {
-                        binding.progressBarLogin.visibility = View.GONE
+                        showProgressBar(false)
                         showSnackBar(binding.root, resources.message.toString())
+                        binding.button.visibility=View.VISIBLE
                     }
                 }
             }

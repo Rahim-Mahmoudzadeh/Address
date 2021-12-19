@@ -12,11 +12,13 @@ import ir.rahimmahmoudzadeh.address.R
 import ir.rahimmahmoudzadeh.address.data.model.LocationInformation
 import ir.rahimmahmoudzadeh.address.databinding.HomeBinding
 import ir.rahimmahmoudzadeh.address.ui.MainActivity
+import ir.rahimmahmoudzadeh.address.utils.AddressFragment
 import ir.rahimmahmoudzadeh.address.utils.Resource
 import ir.rahimmahmoudzadeh.address.utils.showSnackBar
+import org.koin.androidx.compose.viewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : AddressFragment() {
     private var _binding: HomeBinding? = null
     private val binding get() = _binding!!
 
@@ -45,6 +47,9 @@ class HomeFragment : Fragment() {
         binding.fabHomeAddLocation.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_addLocation)
         }
+        binding.imageViewrefresh.setOnClickListener {
+            getAddress()
+        }
 
     }
 
@@ -53,15 +58,19 @@ class HomeFragment : Fragment() {
             it?.let { resource ->
                 when (resource) {
                     is Resource.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                        showProgressBar(true)
                     }
                     is Resource.Success -> {
-                        binding.progressBar.visibility = View.GONE
+                        showProgressBar(false)
                         homeRvAdapter.location = it.data as ArrayList<LocationInformation>
+                        binding.textViewRefresh.visibility=View.GONE
+                        binding.imageViewrefresh.visibility=View.GONE
                     }
                     is Resource.Error -> {
-                        binding.progressBar.visibility = View.GONE
+                        showProgressBar(false)
                         showSnackBar(binding.root, resource.message.toString())
+                        binding.textViewRefresh.visibility=View.VISIBLE
+                        binding.imageViewrefresh.visibility=View.VISIBLE
                     }
                 }
             }
