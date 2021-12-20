@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface CheckUser {
-    suspend fun checkUser():List<LocationInformation>
+    suspend fun checkUserSarver():List<LocationInformation>
 }

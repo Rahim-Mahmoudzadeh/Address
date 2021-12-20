@@ -18,15 +18,4 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
-
-    fun isConnected(view: View, context: Context): Boolean {
-        val connectivityManager: ConnectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val network: NetworkInfo? = connectivityManager.activeNetworkInfo
-        if (network == null || !network?.isConnected) {
-            showSnackBar(view, context.resources.getString(R.string.error_connection))
-        }
-
-        return network != null && network.isConnected
-    }
 }

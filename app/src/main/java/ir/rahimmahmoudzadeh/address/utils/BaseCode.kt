@@ -1,16 +1,18 @@
 package ir.rahimmahmoudzadeh.address.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import ir.rahimmahmoudzadeh.address.R
 import org.json.JSONObject
 import retrofit2.HttpException
 
-abstract class AddressFragment : Fragment(),AddressView {
+abstract class AddressFragment : Fragment(), AddressView {
     override val rootView: ConstraintLayout?
         get() = view as ConstraintLayout
     override val viewContext: Context?
@@ -36,8 +38,12 @@ interface AddressView {
 
 }
 
+@SuppressLint("WrongConstant")
 fun showSnackBar(view: View, message: String) {
-    Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+    val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+    ViewCompat.setLayoutDirection(snackbar.view, ViewCompat.LAYOUT_DIRECTION_RTL)
+    snackbar.show()
+
 }
 
 fun convertErrorBody(throwable: HttpException): String {
@@ -48,10 +54,7 @@ fun convertErrorBody(throwable: HttpException): String {
             errorMessage = errorJsonObject.getString("detail")
         } else if (throwable.code() == 403) {
             errorMessage = errorJsonObject.getJSONArray("phone").get(0).toString()
-        } else if (throwable.code() == 500) {
-            errorMessage = errorJsonObject.getString("detail")
         }
-
         return errorMessage.toString()
 
     } catch (exception: Exception) {

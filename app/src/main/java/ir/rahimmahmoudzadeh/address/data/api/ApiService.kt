@@ -14,5 +14,5 @@ interface ApiService {
     suspend fun checkUser(): List<LocationInformation>
 
     @POST("karfarmas/address")
-    suspend fun addAddress(@Body locationCreatedItem: LocationCreatedItem):LocationCreatedItem
+    suspend fun addAddress(@Body locationCreatedItem: LocationCreatedItem): LocationCreatedItem
 }

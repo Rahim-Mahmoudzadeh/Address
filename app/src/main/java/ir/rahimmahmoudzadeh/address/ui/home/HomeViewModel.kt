@@ -1,25 +1,29 @@
 package ir.rahimmahmoudzadeh.address.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import ir.rahimmahmoudzadeh.address.data.model.LocationInformation
 import ir.rahimmahmoudzadeh.address.data.repository.getAddress.GetAddress
 import ir.rahimmahmoudzadeh.address.utils.Resource
 import ir.rahimmahmoudzadeh.address.utils.convertErrorBody
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.HttpException
 
 class HomeViewModel(val getAddress: GetAddress) : ViewModel() {
-    fun getAddressLiveData(): LiveData<Resource<List<LocationInformation>>> = liveData {
-        try {
-            emit(Resource.Loading())
-            val getAddress = getAddress.getAddress()
-            emit(Resource.Success(getAddress))
-        } catch (e: HttpException) {
-            emit(Resource.Error(convertErrorBody(e)))
-        } catch (e: IOException) {
-            emit(Resource.Error("Not Internet"))
+    private val _mutableLiveData = MutableLiveData<Resource<List<LocationInformation>>>()
+    val getAddressLiveData: LiveData<Resource<List<LocationInformation>>> = _mutableLiveData
+
+    init {
+        getAddress()
+    }
+
+    fun getAddress() {
+        viewModelScope.launch {
+            getAddress.getAddress().collect {
+                _mutableLiveData.value = it
+            }
         }
     }
+
 }
