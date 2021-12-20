@@ -4,8 +4,8 @@
     <string name="submit_information">لطفا اطلاعات ورود خود را وارد نمایید</string>
     <string name="name">نام</string>
     <string name="last_name">نام خانوادگی:</string>
-    <string name="phone_number">شماره تلفن</string>
-    <string name="landline_phone">تلفن ثابت</string>
+    <string name="phone_number">شماره تلفن(11 رقم)</string>
+    <string name="landline_phone">تلفن ثابت(11رقم)</string>
     <string name="address">آدرس دقیق</string>
     <string name="gender">جنسیت</string>
     <string name="man">مرد</string>
@@ -25,4 +25,5 @@
     <string name="error_connection">لطفا اینترنت خود را روشن کنید!</string>
     <string name="ok">باشه</string>
     <string name="try_again">تلاش مجدد</string>
+    <string name="error_text_phone">شماره تلفن صحیح نیست</string>
 </resources>

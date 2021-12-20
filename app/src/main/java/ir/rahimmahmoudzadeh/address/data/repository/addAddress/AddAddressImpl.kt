@@ -5,6 +5,6 @@ import ir.rahimmahmoudzadeh.address.data.model.LocationCreatedItem
 import ir.rahimmahmoudzadeh.address.data.model.LocationInformation
 
 class AddAddressImpl(val apiService: ApiService) : AddAddress {
-    override suspend fun addAddress(locationInformation: LocationCreatedItem): LocationInformation =
+    override suspend fun addAddress(locationInformation: LocationCreatedItem): LocationCreatedItem =
         apiService.addAddress(locationInformation)
 }

@@ -45,26 +45,33 @@ class MapFragment : Fragment(), MapboxMap.OnMapLongClickListener {
         setMap()
         mapView.onCreate(savedInstanceState)
 
-
         binding.btnMapSaveLocation.setOnClickListener {
-            viewModel.checkSaveAddress().observe(viewLifecycleOwner) {
-                it?.let { resource ->
-                    when (resource) {
-                        is Resource.Loading -> {
-                            binding.progressBarMap.visibility = View.VISIBLE
-                        }
-                        is Resource.Success -> {
-                            findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
-                        }
-                        is Resource.Error -> {
-                            showSnackBar(binding.root, resource.message.toString())
-                            binding.progressBarMap.visibility = View.GONE
-                        }
+            if (checkMapEmpty())
+            {
+                saveAddressInSrver()
+            }
+        }
+    }
+
+    private fun saveAddressInSrver() {
+        viewModel.checkSaveAddress().observe(viewLifecycleOwner) {
+            it?.let { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        binding.progressBarMap.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
+                    }
+                    is Resource.Error -> {
+                        showSnackBar(binding.root, resource.message.toString())
+                        binding.progressBarMap.visibility = View.GONE
                     }
                 }
             }
         }
     }
+
 
     private fun setMap() {
         _binding?.let { binding ->
@@ -99,6 +106,10 @@ class MapFragment : Fragment(), MapboxMap.OnMapLongClickListener {
                 .position(position)
                 .icon(icon)
         )
+    }
+
+    private fun checkMapEmpty(): Boolean {
+        return !map!!.markers.isNullOrEmpty()
     }
 
     override fun onStart() {

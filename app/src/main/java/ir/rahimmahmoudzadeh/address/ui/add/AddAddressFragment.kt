@@ -59,6 +59,16 @@ class AddAddressFragment : Fragment() {
             errorTextField = errorTextField.plus(1)
             binding.tilAddPhoneNumber.error =
                 requireContext().resources.getString(R.string.error_textInput)
+        } else if (binding.tietAddPhoneNumber.text.toString().length < 11 && !binding.tietAddPhoneNumber.text.toString()
+                .substring(
+                    0,
+                    1
+                ) .equals("09")
+        ) {
+            errorTextField = errorTextField.plus(1)
+            binding.tilAddPhoneNumber.error =
+                requireContext().resources.getString(R.string.error_text_phone)
+
         } else {
             binding.tilAddPhoneNumber.error = ""
         }
@@ -66,6 +76,15 @@ class AddAddressFragment : Fragment() {
             errorTextField = errorTextField.plus(1)
             binding.tilAddLandlinePhone.error =
                 requireContext().resources.getString(R.string.error_textInput)
+        } else if (binding.tietAddLandlinePhone.text.toString().length < 11 && !binding.tietAddPhoneNumber?.text?.substring(
+                0,
+                1
+            ).equals("09")
+        ) {
+            errorTextField = errorTextField.plus(1)
+            binding.tilAddLandlinePhone.error =
+                requireContext().resources.getString(R.string.error_text_phone)
+
         } else {
             binding.tilAddLandlinePhone.error = ""
         }
@@ -93,12 +112,10 @@ class AddAddressFragment : Fragment() {
 
     private fun getGender(): String {
         var gender = resources.getString(R.string.man)
-        if (binding.man.isChecked)
-        {
-          gender=resources.getString(R.string.man)
-        }
-        else{
-            gender=resources.getString(R.string.woman)
+        if (binding.man.isChecked) {
+            gender = resources.getString(R.string.man)
+        } else {
+            gender = resources.getString(R.string.woman)
         }
 
         return gender

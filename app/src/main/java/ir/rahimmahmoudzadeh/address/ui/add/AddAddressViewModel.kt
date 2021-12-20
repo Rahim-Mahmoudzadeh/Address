@@ -35,7 +35,7 @@ class AddAddressViewModel(val addAddress: AddAddress) : ViewModel() {
         lng = lngUser
     }
 
-    fun checkSaveAddress(): LiveData<Resource<LocationInformation>> = liveData {
+    fun checkSaveAddress(): LiveData<Resource<LocationCreatedItem>> = liveData {
         try {
             emit(Resource.Loading())
             val isSuccess = addAddress.addAddress(
