@@ -1,6 +1,7 @@
 package ir.rahimmahmoudzadeh.address.data.api
 
 import ir.rahimmahmoudzadeh.address.data.sharedPreferences.UserSave
+import ir.rahimmahmoudzadeh.address.utils.Constants.Authorization
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -10,11 +11,13 @@ class BasicAuthInterceptor(var userSave: UserSave) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
         try {
-           request = request.newBuilder().addHeader("Authorization", Credentials.basic(userSave.getMobile(), userSave.getPassword())).build()
-       }catch (e:NullPointerException)
-       {
+            request = request.newBuilder().addHeader(
+                Authorization,
+                Credentials.basic(userSave.getMobile(), userSave.getPassword())
+            ).build()
+        } catch (e: NullPointerException) {
 
-       }
+        }
         return chain.proceed(request)
     }
 }
