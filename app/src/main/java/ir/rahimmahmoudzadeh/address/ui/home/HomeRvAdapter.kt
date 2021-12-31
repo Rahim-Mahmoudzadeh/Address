@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.rahimmahmoudzadeh.address.R
 import ir.rahimmahmoudzadeh.address.data.model.LocationInformation
+import ir.rahimmahmoudzadeh.address.data.model.LocationInformationEntity
 import ir.rahimmahmoudzadeh.address.databinding.ListLocationBinding
 
 class HomeRvAdapter: RecyclerView.Adapter<HomeRvAdapter.ViewHolder>() {
 
-    var location = ArrayList<LocationInformation>()
+    var location = ArrayList<LocationInformationEntity>()
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
@@ -30,7 +31,7 @@ class HomeRvAdapter: RecyclerView.Adapter<HomeRvAdapter.ViewHolder>() {
     override fun getItemCount(): Int =location.size
     inner class ViewHolder(itemView:ListLocationBinding):RecyclerView.ViewHolder(itemView.root){
         val item=itemView
-        fun bin(locationInformation: LocationInformation)
+        fun bin(locationInformation: LocationInformationEntity)
         {
             item.tvListAddressAddress.text=itemView.context.resources.getString(R.string.address_location)+" "+locationInformation.address
             item.tvListAddressLastName.text=itemView.context.resources.getString(R.string.last_name)+" "+locationInformation.first_name+" "+locationInformation.last_name

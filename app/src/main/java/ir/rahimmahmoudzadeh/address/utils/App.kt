@@ -6,9 +6,9 @@ import android.app.Application
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
-import io.reactivex.Single
 import ir.map.sdk_map.Mapir
 import ir.rahimmahmoudzadeh.address.data.api.RetrofitBuilder
+import ir.rahimmahmoudzadeh.address.data.db.RoomBuilder
 import ir.rahimmahmoudzadeh.address.data.repository.addAddress.AddAddress
 import ir.rahimmahmoudzadeh.address.data.repository.addAddress.AddAddressImpl
 import ir.rahimmahmoudzadeh.address.data.repository.checkUser.CheckUser
@@ -32,9 +32,10 @@ class App : Application() {
         val module = module {
             single { UserSave(this@App) }
             single { RetrofitBuilder.apiService(get()) }
+            single { RoomBuilder.getInstance(this@App) }
             factory<CheckUser> { CheckUserImpl(get()) }
             factory { CheckUserImpl(get()) }
-            factory<GetAddress> { GetAddressImpl(get()) }
+            factory<GetAddress> { GetAddressImpl(get(),get()) }
             factory<AddAddress> { AddAddressImpl(get()) }
             viewModel { AddAddressViewModel(get()) }
             viewModel { LoginViewModel(get()) }

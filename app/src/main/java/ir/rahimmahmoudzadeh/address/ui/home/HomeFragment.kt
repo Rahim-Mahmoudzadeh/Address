@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.rahimmahmoudzadeh.address.R
 import ir.rahimmahmoudzadeh.address.data.model.LocationInformation
+import ir.rahimmahmoudzadeh.address.data.model.LocationInformationEntity
 import ir.rahimmahmoudzadeh.address.databinding.HomeBinding
 import ir.rahimmahmoudzadeh.address.ui.MainActivity
 import ir.rahimmahmoudzadeh.address.utils.AddressFragment
@@ -62,7 +63,8 @@ class HomeFragment : AddressFragment() {
                     }
                     is Resource.Success -> {
                         showProgressBar(false)
-                        homeRvAdapter.location = it.data as ArrayList<LocationInformation>
+                        homeRvAdapter.location =
+                            resource.data as ArrayList<LocationInformationEntity>
                         binding.textViewRefresh.visibility = View.GONE
                         binding.imageViewrefresh.visibility = View.GONE
                     }

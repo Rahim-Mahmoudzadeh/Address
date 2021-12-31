@@ -2,6 +2,7 @@ package ir.rahimmahmoudzadeh.address.ui.home
 
 import androidx.lifecycle.*
 import ir.rahimmahmoudzadeh.address.data.model.LocationInformation
+import ir.rahimmahmoudzadeh.address.data.model.LocationInformationEntity
 import ir.rahimmahmoudzadeh.address.data.repository.getAddress.GetAddress
 import ir.rahimmahmoudzadeh.address.utils.Resource
 import ir.rahimmahmoudzadeh.address.utils.convertErrorBody
@@ -11,8 +12,8 @@ import okio.IOException
 import retrofit2.HttpException
 
 class HomeViewModel(val getAddress: GetAddress) : ViewModel() {
-    private val _mutableLiveData = MutableLiveData<Resource<List<LocationInformation>>>()
-    val getAddressLiveData: LiveData<Resource<List<LocationInformation>>> = _mutableLiveData
+    private val _mutableLiveData = MutableLiveData<Resource<List<LocationInformationEntity>>>()
+    val getAddressLiveData: LiveData<Resource<List<LocationInformationEntity>>> = _mutableLiveData
 
     init {
         getAddress()
@@ -20,8 +21,13 @@ class HomeViewModel(val getAddress: GetAddress) : ViewModel() {
 
     fun getAddress() {
         viewModelScope.launch {
-            getAddress.getAddress().collect {
-                _mutableLiveData.value = it
+            try {
+                _mutableLiveData.value = Resource.Loading()
+                _mutableLiveData.value = Resource.Success(getAddress.getAddress())
+            } catch (e: HttpException) {
+                 _mutableLiveData.value= Resource.Error(convertErrorBody(e))
+            } catch (e: IOException) {
+                _mutableLiveData.value= Resource.Error("Not Internet")
             }
         }
     }
