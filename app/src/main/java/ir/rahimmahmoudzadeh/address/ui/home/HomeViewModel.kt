@@ -25,11 +25,10 @@ class HomeViewModel(val getAddress: GetAddress) : ViewModel() {
                 _mutableLiveData.value = Resource.Loading()
                 _mutableLiveData.value = Resource.Success(getAddress.getAddress())
             } catch (e: HttpException) {
-                 _mutableLiveData.value= Resource.Error(convertErrorBody(e))
+                _mutableLiveData.value = Resource.Error(convertErrorBody(e))
             } catch (e: IOException) {
-                _mutableLiveData.value= Resource.Error("Not Internet")
+                _mutableLiveData.value = Resource.Error("Not Internet")
             }
         }
     }
-
 }
