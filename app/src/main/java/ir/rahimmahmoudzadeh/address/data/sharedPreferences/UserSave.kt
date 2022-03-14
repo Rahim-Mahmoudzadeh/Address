@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.SharedPreferences
 
-class UserSave(context: Context) {
+class UserSave(val context: Context) {
     private val userSharedPreferences: SharedPreferences =
         context.getSharedPreferences("auth", Context.MODE_PRIVATE)
 
